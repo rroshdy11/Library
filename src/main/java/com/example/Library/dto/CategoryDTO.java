@@ -7,6 +7,8 @@ import lombok.*;
 @NoArgsConstructor
 public class CategoryDTO {
     private Long id;
+    private String name;
+    private Long parentCategoryId;
 
     public String getName() {
         return name;
@@ -32,6 +34,5 @@ public class CategoryDTO {
         this.id = id;
     }
 
-    private String name;
-    private Long parentCategoryId; // Assuming parent category is a Long ID
+// Assuming parent category is a Long ID
 }

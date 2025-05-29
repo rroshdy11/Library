@@ -1,5 +1,6 @@
 package com.example.Library.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,6 +17,15 @@ import java.util.List;
 public class Publisher {
     @Id
     private Long id;
+
+    private String name;
+    private String address;
+    private String website;
+
+    @OneToMany(mappedBy = "publisher", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Book> books = new ArrayList<>();
+
 
     public String getName() {
         return name;
@@ -57,12 +67,6 @@ public class Publisher {
         this.books = books;
     }
 
-    private String name;
-    private String address;
-    private String website;
-
-    @OneToMany(mappedBy = "publisher", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Book> books = new ArrayList<>();
 
 
 }

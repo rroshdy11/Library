@@ -14,6 +14,22 @@ import java.util.List;
 @Setter
 @Getter
 public class Category {
+    @Id
+    @SequenceGenerator(name = "category_seq", sequenceName = "category_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "category_seq")
+    private Long id;
+    private String name;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id")
+    private Category parent;
+
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
+    private List<Category> children = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "categories", fetch = FetchType.LAZY)
+    private List<Book> books = new ArrayList<>();
+
     public Long getId() {
         return id;
     }
@@ -54,18 +70,5 @@ public class Category {
         this.books = books;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_id")
-    private Category parent;
-
-    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
-    private List<Category> children = new ArrayList<>();
-
-    @ManyToMany(mappedBy = "categories", fetch = FetchType.LAZY)
-    private List<Book> books = new ArrayList<>();
 }

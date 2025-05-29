@@ -20,6 +20,8 @@ public class BookDto {
     private int pageCount;
     private String coverImageUrl;
     private PublisherDTO publisher;
+    private List<CategoryDTO> categories= new ArrayList<>();
+    private List<AuthorDTO> authors= new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -109,6 +111,5 @@ public class BookDto {
         this.authors = authors;
     }
 
-    private List<CategoryDTO> categories= new ArrayList<>();
-    private List<AuthorDTO> authors= new ArrayList<>();
+
 }

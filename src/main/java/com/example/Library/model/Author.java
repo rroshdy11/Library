@@ -15,6 +15,8 @@ import java.util.List;
 @NoArgsConstructor
 public class Author {
     @Id
+    @SequenceGenerator(name = "author_seq", sequenceName = "author_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "author_seq")
     private Long id;
 
     private String name;

@@ -8,6 +8,9 @@ import java.time.LocalDate;
 public class AuthorDTO {
     private Long id;
     private String name;
+    private String bio;
+    private String dateOfBirth;
+    private String nationality;
 
     public Long getId() {
         return id;
@@ -33,11 +36,11 @@ public class AuthorDTO {
         this.bio = bio;
     }
 
-    public LocalDate getDateOfBirth() {
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(LocalDate dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -49,7 +52,5 @@ public class AuthorDTO {
         this.nationality = nationality;
     }
 
-    private String bio;
-    private LocalDate dateOfBirth;
-    private String nationality;
+
 }

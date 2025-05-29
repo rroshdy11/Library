@@ -6,6 +6,12 @@ import lombok.*;
 @Getter
 @NoArgsConstructor
 public class PublisherDTO {
+
+    private Long id;
+    private String name;
+    private String address;
+    private String website;
+
     public Long getId() {
         return id;
     }
@@ -38,9 +44,5 @@ public class PublisherDTO {
         this.website = website;
     }
 
-    private Long id;
-    private String name;
-    private String address;
-    private String website;
 
 }

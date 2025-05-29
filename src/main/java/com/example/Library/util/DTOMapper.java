@@ -72,7 +72,7 @@ public class DTOMapper {
 
     }
 
-    public BookDto mapBookTODTO(Book book) {
+    public BookDto mapBookToDTO(Book book) {
         BookDto bookDTO = new BookDto();
         bookDTO.setId(book.getId());
         bookDTO.setTitle(book.getTitle());
@@ -90,7 +90,10 @@ public class DTOMapper {
                 authorDTO.setId(author.getId());
                 authorDTO.setName(author.getName());
                 authorDTO.setBio(author.getBio());
-                authorDTO.setDateOfBirth(author.getDateOfBirth());
+                // Convert dateOfBirth from LocalDate to String
+                if (author.getDateOfBirth() != null) {
+                    authorDTO.setDateOfBirth(author.getDateOfBirth().toString());
+                }
                 authorDTO.setNationality(author.getNationality());
                 authorDTOS.add(authorDTO);
             }
@@ -128,7 +131,19 @@ public class DTOMapper {
         author.setId(authorDTO.getId());
         author.setName(authorDTO.getName());
         author.setBio(authorDTO.getBio());
-        author.setDateOfBirth(authorDTO.getDateOfBirth());
+        // Convert dateOfBirth from String to LocalDate as dd-MM-yyyy
+        if (authorDTO.getDateOfBirth() != null) {
+            // take dateOfBirth in the format dd-MM-yyyy
+            String[] dateParts = authorDTO.getDateOfBirth().split("-");
+            if (dateParts.length == 3) {
+                int day = Integer.parseInt(dateParts[0]);
+                int month = Integer.parseInt(dateParts[1]);
+                int year = Integer.parseInt(dateParts[2]);
+                author.setDateOfBirth(LocalDate.of(year, month, day));
+            } else {
+                throw new IllegalArgumentException("Invalid date format. Expected dd-MM-yyyy");
+            }
+        }
         author.setNationality(authorDTO.getNationality());
         return author;
     }
@@ -137,7 +152,10 @@ public class DTOMapper {
         authorDTO.setId(author.getId());
         authorDTO.setName(author.getName());
         authorDTO.setBio(author.getBio());
-        authorDTO.setDateOfBirth(author.getDateOfBirth());
+        // Convert dateOfBirth from LocalDate to String
+        if (author.getDateOfBirth() != null) {
+            authorDTO.setDateOfBirth(author.getDateOfBirth().toString());
+        }
         authorDTO.setNationality(author.getNationality());
         return authorDTO;
     }
