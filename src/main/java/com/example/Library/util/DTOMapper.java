@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class DTOMapper {
@@ -34,42 +35,37 @@ public class DTOMapper {
         this.categoryRepository = categoryRepository;
     }
 
-    public Book maptoBook (BookDto bookDTO){
-        Book book=new Book();
-        book.setId(bookDTO.getId());
-        book.setTitle(bookDTO.getTitle());
-        //search for the authors by id from authorDTO sent
-        if (bookDTO.getAuthors() != null && !bookDTO.getAuthors().isEmpty()) {
-            List<Author> authors = bookDTO.getAuthors().stream()
-                    .map(authorDTO -> authorRepository.findById(authorDTO.getId())
-                            .orElseThrow(() -> new RuntimeException("Author not found")))
-                    .toList();
-            book.setAuthors(authors);
+    public Book maptoBook(BookDto dto) {
+        Book book = new Book();
+        book.setTitle(dto.getTitle());
+        book.setSummary(dto.getSummary());
+        book.setISBN(dto.getISBN());
+        book.setLanguage(dto.getLanguage());
+        book.setEdition(dto.getEdition());
+        book.setCoverImageUrl(dto.getCoverImageUrl());
+
+        if (dto.getPublisher() != null) {
+            book.setPublisher(
+                    publisherRepository.findById(dto.getPublisher().getId())
+                            .orElseThrow(() -> new RuntimeException("Publisher not found"))
+            );
+        }
+        if (dto.getAuthors() != null) {
+            book.setAuthors(dto.getAuthors().stream()
+                    .map(a -> authorRepository.findById(a.getId())
+                            .orElseThrow(() -> new RuntimeException("Author not found: " + a.getId())))
+                    .collect(Collectors.toList()));
         }
 
-        // search for the publisher by id
-        if (bookDTO.getPublisher() != null) {
-            PublisherDTO publisherDTO = bookDTO.getPublisher();
-            Publisher publisher = publisherRepository.findById(publisherDTO.getId())
-                    .orElseThrow(() -> new RuntimeException("Publisher not found"));
-            book.setPublisher(publisher);
+        // Example: map categories
+        if (dto.getCategories() != null) {
+            book.setCategories(dto.getCategories().stream()
+                    .map(c -> categoryRepository.findById(c.getId())
+                            .orElseThrow(() -> new RuntimeException("Category not found: " + c.getId())))
+                    .collect(Collectors.toList()));
         }
-        //Search for the categories by id
-        if (bookDTO.getCategories() != null && !bookDTO.getCategories().isEmpty()) {
-            List<Category> categories = bookDTO.getCategories().stream()
-                    .map(categoryDTO -> categoryRepository.findById(categoryDTO.getId())
-                            .orElseThrow(() -> new RuntimeException("Category not found")))
-                    .toList();
-            book.setCategories(categories);
-        }
-        book.setISBN(bookDTO.getISBN());
-        book.setEdition(bookDTO.getISBN());
-        book.setSummary(bookDTO.getSummary());
-        book.setLanguage(bookDTO.getLanguage());
-        book.setCoverImageUrl(bookDTO.getCoverImageUrl());
 
         return book;
-
     }
 
     public BookDto mapBookToDTO(Book book) {

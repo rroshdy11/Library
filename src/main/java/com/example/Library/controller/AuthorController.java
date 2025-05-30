@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+
 
 @RestController
 @RequestMapping("/authors")
@@ -19,12 +21,14 @@ public class AuthorController {
     }
     // This method will handle the creation of a new author
     @PostMapping("/create")
+    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
     public ResponseEntity<?> createAuthor(@RequestBody  AuthorDTO authorDTO) {
         return  authorService.createAuthor(authorDTO);
     }
 
     // This method will handle the update of an existing author
     @PutMapping("/update/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
     public ResponseEntity<?> updateAuthor(@PathVariable("id")  Long id,@RequestBody AuthorDTO authorDTO) {
         return authorService.updateAuthor(id,authorDTO);
     }

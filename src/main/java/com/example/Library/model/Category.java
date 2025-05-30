@@ -23,7 +23,7 @@ public class Category {
 
     @ManyToOne
     @JoinColumn(name = "parent_id")
-
+    @JsonIgnore
     private Category parent;
 
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
@@ -31,6 +31,7 @@ public class Category {
     private List<Category> children = new ArrayList<>();
 
     @ManyToMany(mappedBy = "categories")
+    @JsonIgnore
     private List<Book> books = new ArrayList<>();
 
     public Long getId() {
