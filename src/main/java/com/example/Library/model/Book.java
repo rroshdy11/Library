@@ -26,6 +26,8 @@ public class Book {
     // Cover image fields directly in the Book table
     private String coverImageUrl;
 
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+    private List<Borrowing> borrowings = new ArrayList<>();
     @ManyToMany
     @JoinTable(
             name = "book_authors",

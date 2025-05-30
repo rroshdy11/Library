@@ -179,12 +179,27 @@ public class DTOMapper {
         Category category = new Category();
         category.setId(categoryDTO.getId());
         category.setName(categoryDTO.getName());
+        // Set parent category if it exists
+        if( categoryDTO.getParentCategoryId() != null &&
+            categoryRepository.existsById(categoryDTO.getParentCategoryId())) {
+            Category parentCategory = categoryRepository.findById(categoryDTO.getParentCategoryId())
+                    .orElseThrow(() -> new RuntimeException("Parent category not found"));
+            category.setParent(parentCategory);
+        } else {
+            category.setParent(null); // No parent category
+        }
         return category;
     }
     public CategoryDTO mapCategoryToDTO(Category category) {
         CategoryDTO categoryDTO = new CategoryDTO();
         categoryDTO.setId(category.getId());
         categoryDTO.setName(category.getName());
+        // Set parent category ID if parent exists
+        if (category.getParent() != null) {
+            categoryDTO.setParentCategoryId(category.getParent().getId());
+        } else {
+            categoryDTO.setParentCategoryId(null);
+        }
         return categoryDTO;
     }
 
