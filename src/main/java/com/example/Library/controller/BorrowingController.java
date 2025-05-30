@@ -16,7 +16,7 @@ public class BorrowingController {
         this.borrowingService = borrowingService;
     }
     @PostMapping("/create")
-    @PreAuthorize("hasAnyRole('MEMEBR', 'ADMIN')")
+    @PreAuthorize("hasAnyRole('MEMEBR', 'ADMIN', 'LIBRARIAN')")
     public ResponseEntity<?> createBorrowingRecord(@RequestBody BorrowingDTO borrowingDTO) {
         return borrowingService.createBorrowingRecord(borrowingDTO);
     }
@@ -28,7 +28,7 @@ public class BorrowingController {
     }
 
     @PutMapping("returnbook/{id}")
-    @PreAuthorize("hasAnyRole('LIBRARIAN', 'ADMIN', 'STAFF', 'MEMBER')")
+    @PreAuthorize("hasAnyRole('LIBRARIAN', 'ADMIN',  'MEMBER')")
     public ResponseEntity<?> returnBook(@PathVariable Long id) {
         return borrowingService.returnBorrowedBook(id);
     }
