@@ -1,5 +1,6 @@
 package com.example.Library.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,6 +28,7 @@ public class Book {
     private String coverImageUrl;
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Borrowing> borrowings = new ArrayList<>();
     @ManyToMany
     @JoinTable(

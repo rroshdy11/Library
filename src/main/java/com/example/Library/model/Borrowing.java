@@ -1,6 +1,6 @@
 package com.example.Library.model;
 
-import com.example.Library.User.Member;
+import com.example.Library.User.User;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -15,7 +15,7 @@ public class Borrowing {
 
     @ManyToOne
     @JoinColumn(name = "member_id")
-    private Member member;
+    private User member;
 
     @ManyToOne
     @JoinColumn(name = "book_id")

@@ -1,13 +1,8 @@
 package com.example.Library.util;
 
-import com.example.Library.dto.AuthorDTO;
-import com.example.Library.dto.BookDto;
-import com.example.Library.dto.CategoryDTO;
-import com.example.Library.dto.PublisherDTO;
-import com.example.Library.model.Author;
-import com.example.Library.model.Book;
-import com.example.Library.model.Category;
-import com.example.Library.model.Publisher;
+import com.example.Library.User.User;
+import com.example.Library.dto.*;
+import com.example.Library.model.*;
 import com.example.Library.repository.AuthorRepository;
 import com.example.Library.repository.PublisherRepository;
 import com.example.Library.repository.CategoryRepository;
@@ -197,6 +192,33 @@ public class DTOMapper {
             categoryDTO.setParentCategoryId(null);
         }
         return categoryDTO;
+    }
+
+    public BorrowingDTO toDto(Borrowing borrowing) {
+        if (borrowing == null) {
+            return null;
+        }
+        BorrowingDTO dto = new BorrowingDTO();
+        dto.setId(borrowing.getId());
+        dto.setMemberId(borrowing.getMember() != null ? borrowing.getMember().getUsername() : null);
+        dto.setBookId(borrowing.getBook() != null ? borrowing.getBook().getId() : null);
+        dto.setBorrowDate(borrowing.getBorrowDate());
+        dto.setDueDate(borrowing.getDueDate());
+        dto.setReturnDate(borrowing.getReturnDate());
+        return dto;
+    }
+    public Borrowing mapToBorrowing(BorrowingDTO dto) {
+        if (dto == null) {
+            return null;
+        }
+        Borrowing borrowing = new Borrowing();
+        borrowing.setId(dto.getId());
+        borrowing.setBorrowDate(dto.getBorrowDate());
+        borrowing.setDueDate(dto.getDueDate());
+        borrowing.setReturnDate(dto.getReturnDate());
+
+
+        return borrowing;
     }
 
 

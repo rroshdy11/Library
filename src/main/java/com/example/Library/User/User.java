@@ -1,5 +1,6 @@
 package com.example.Library.User;
 
+import com.example.Library.model.Borrowing;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.sql.ConnectionBuilder;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -30,11 +32,12 @@ public class User implements UserDetails {
     private Role role;
     private boolean active=true;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private Member memberProfile;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private SystemUser systemUserProfile;
+
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Borrowing> borrowings = new ArrayList<>();
 
 
     @Override
@@ -44,7 +47,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
@@ -54,7 +57,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override

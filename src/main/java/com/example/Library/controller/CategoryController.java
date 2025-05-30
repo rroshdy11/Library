@@ -4,6 +4,7 @@ import com.example.Library.Service.CategoryService;
 import com.example.Library.dto.CategoryDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,28 +17,33 @@ public class CategoryController {
     }
     // This method will handle the creation of a new category
     @PostMapping("/create")
+    @PreAuthorize("hasAnyRole('LIBRARIAN', 'ADMIN')")
     public ResponseEntity<?> createCategory(@RequestBody CategoryDTO categoryDTO) {
         return categoryService.createCategory(categoryDTO);
     }
 
     // This method will handle the update of an existing category
     @PutMapping("/update/{id}")
+    @PreAuthorize("hasAnyRole('LIBRARIAN', 'ADMIN')")
     public ResponseEntity<?> updateCategory(@PathVariable("id") Long id, @RequestBody CategoryDTO categoryDTO) {
         return categoryService.updateCategory(id, categoryDTO);
     }
 
     // This method will handle the deletion of a category
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasAnyRole('LIBRARIAN', 'ADMIN')")
     public ResponseEntity<?> deleteCategory(@PathVariable("id") Long id) {
         return categoryService.deleteCategory(id);
     }
     // This method will handle the retrieval of a category by ID
     @GetMapping("/get/{id}")
+    @PreAuthorize("hasAnyRole('LIBRARIAN', 'ADMIN', 'STAFF', 'MEMBER')")
     public ResponseEntity<?> getCategoryById(@PathVariable("id") Long id) {
         return categoryService.getCategoryById(id);
     }
     // This method will handle the retrieval of all categories
     @GetMapping("/getAll")
+    @PreAuthorize("hasAnyRole('LIBRARIAN', 'ADMIN', 'STAFF', 'MEMBER')")
     public ResponseEntity<?> getAllCategories() {
         return categoryService.getAllCategories();
     }

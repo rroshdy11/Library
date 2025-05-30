@@ -21,37 +21,41 @@ public class AuthorController {
     }
     // This method will handle the creation of a new author
     @PostMapping("/create")
-    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
+    @PreAuthorize("hasAnyRole('LIBRARIAN', 'ADMIN')")
     public ResponseEntity<?> createAuthor(@RequestBody  AuthorDTO authorDTO) {
         return  authorService.createAuthor(authorDTO);
     }
 
     // This method will handle the update of an existing author
     @PutMapping("/update/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
+    @PreAuthorize("hasAnyRole('LIBRARIAN', 'ADMIN', 'STAFF')")
     public ResponseEntity<?> updateAuthor(@PathVariable("id")  Long id,@RequestBody AuthorDTO authorDTO) {
         return authorService.updateAuthor(id,authorDTO);
     }
 
     // This method will handle the deletion of an author
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasAnyRole('LIBRARIAN', 'ADMIN')")
     public ResponseEntity<?> deleteAuthor(@PathVariable("id") Long id) {
         return authorService.deleteAuthor(id);
     }
 
     // This method will handle the retrieval of an author by ID
     @GetMapping("/get/{id}")
+    @PreAuthorize("hasAnyRole('LIBRARIAN', 'ADMIN', 'STAFF', 'MEMBER')")
     public ResponseEntity<?> getAuthorById(@PathVariable("id") Long id) {
         return authorService.getAuthorById(id);
     }
     // This method will handle the retrieval of all authors
     @GetMapping("/getAll")
+    @PreAuthorize("hasAnyRole('LIBRARIAN', 'ADMIN', 'STAFF', 'MEMBER')")
     public ResponseEntity<?> getAllAuthors() {
         return authorService.getAllAuthors();
     }
 
     // This method will handle the retrieval of authors by name
     @GetMapping("/getByName/{name}")
+    @PreAuthorize("hasAnyRole('LIBRARIAN', 'ADMIN', 'STAFF', 'MEMBER')")
     public ResponseEntity<?> getAuthorsByName(@PathVariable("name") String name) {
         return authorService.getAuthorByName(name);
     }
