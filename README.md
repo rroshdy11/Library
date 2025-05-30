@@ -7,6 +7,11 @@ This is a **Library Management System** built with **Spring Boot**. It features 
 ## Project ERD
 ![Library Management System ERD](./ERD.png)
 ## 📦 Project Structure
+```
+## API Testing
+
+The file `Library.postman_collection.json` contains a Postman collection with sample requests for all API endpoints. You can import it into Postman to easily test the system.
+
 
 ```
 com.example.Library
