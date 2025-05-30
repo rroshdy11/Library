@@ -2,8 +2,10 @@
 
 This is a **Library Management System** built with **Spring Boot**. It features **JWT Authentication**, **Role-Based Access Control (RBAC)**, and supports various user roles: `ADMIN`, `LIBRARIAN`, `STAFF`, and `MEMBER`.
 
----
 
+---
+## Project ERD
+![Library Management System ERD](erd.png)
 ## 📦 Project Structure
 
 ```
