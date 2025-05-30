@@ -5,7 +5,7 @@ This is a **Library Management System** built with **Spring Boot**. It features 
 
 ---
 ## Project ERD
-![Library Management System ERD](erd.png)
+![Library Management System ERD](./ERD.png)
 ## 📦 Project Structure
 
 ```
